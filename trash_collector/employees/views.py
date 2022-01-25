@@ -5,8 +5,9 @@ from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
-from .models import Employee
 
+from .models import Employee
+from .models import User
 
 
 
@@ -45,6 +46,7 @@ def create(request):
         weekly_from_form = request.POST.get('weekly_pickup')
         new_employee = Employee(name=name_from_form, user=logged_in_user, address=address_from_form, zip_code=zip_from_form, weekly_pickup=weekly_from_form)
         new_employee.save()
-        return HttpResponseRedirect(reverse('employee:index'))
+
+        return HttpResponseRedirect(reverse('employees:index'))
     else:
         return render(request, 'employees/create.html')
