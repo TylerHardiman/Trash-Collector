@@ -18,7 +18,7 @@ from .models import Employee
 def index(request):
     # This line will get the Customer model from the other app, it can now be used to query the db for Customers
 
-    Customer = apps.get_model('customer.Customer')
+    # Customer = apps.get_model('customer.Customer')
 
     logged_in_user = request.user
     try:
@@ -47,4 +47,4 @@ def create(request):
         new_employee.save()
         return HttpResponseRedirect(reverse('employee:index'))
     else:
-        return render(request, 'employee/create.html')
+        return render(request, 'employees/create.html')
