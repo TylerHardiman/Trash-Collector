@@ -13,6 +13,7 @@
     <br>       
     
 
+    <h3>{% now 'DATE_FORMAT' %}</h3><br>
     {% else %}
     <p>You are at the Employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
