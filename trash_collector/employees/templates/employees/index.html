@@ -9,7 +9,8 @@
     {% if user.is_authenticated %}
     Hello {{ logged_in_employee.name }}!<br />
     Address: {{ logged_in_employee.address }}<br /> 
-    Zip Code: {{logged_in_employee.zip_code }}<br />        
+    Zip Code: {{logged_in_employee.zip_code }}<br /> 
+    <br>       
     
 
     {% else %}
@@ -17,6 +18,46 @@
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
     {% endif %}
-
+    
+    <div class="center-text">
+      <h2>List of all Customers:</h2>
+      <br>
+    <table class="center-table">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Zip code</th>
+              <th>Pickup Day</th>
+              <th>One Time Pick Up Date</th>
+              <th>Suspend Start</th>
+              <th>Suspend End</th>
+              <th>Date of Last Pick Up</th>
+          </tr>
+      </thead>
+      <tbody>
+    {% for customer in customers %}
+      <tr>
+          <td>{{customer.name}}</td>
+          <td>{{customer.zip_code}}</td>
+          <td>{{customer.weekly_pickup}}</td>
+          <td>{{customer.one_time_pick_up}}</td>
+          <td>{{customer.suspend_start}}</td>
+          <td>{{customer.suspend_end}}</td>
+          <td>{{customer.date_of_last_pickup}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 {% endblock %}
+
+
+{% comment %} <td>{{logged_in_customer.first_name}}</td>
+<td>{{logged_in_customer.last_name}}</td>
+<td>{{logged_in_customer.zip_code}}</td>
+<td>{{logged_in_customer.weekly_pickup}}</td>
+<td>{{logged_in_customer.one_time_pick_up}}</td>
+<td>{{logged_in_customer.suspend_start}}</td>
+<td>{{logged_in_customer.suspend_end}}</td>
+<td>{{logged_in_customer.date_of_last_pickup}}</td> {% endcomment %}
