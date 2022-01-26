@@ -6,10 +6,17 @@
 
 {% block content%} 
 
-{% if user.is_authenticated %}
-Hello {{ logged_in_employee.name }}!<br />
-Address: {{ logged_in_employee.address }} {{logged_in_employee.zip_code }}<br />
-{% endif %}
+    {% if user.is_authenticated %}
+    Hello {{ logged_in_employee.name }}!<br />
+    Address: {{ logged_in_employee.address }}<br /> 
+    Zip Code: {{logged_in_employee.zip_code }}<br />        
+    
+
+    {% else %}
+    <p>You are at the Employee index, but you are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'accounts:register' %}">Sign Up</a>
+    {% endif %}
 
 
 {% endblock %}
