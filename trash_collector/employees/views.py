@@ -99,7 +99,24 @@ def charge_customer(request, customer_id):
     update_current_balance.save()
     
     
+
+@login_required
+def all_customers(request, customer_id):
+    # This line will get the Customer model from the other app, it can now be used to query the db for Customers
+    Customer = apps.get_model('customers.Customer') # Customer database is being loaded into the variable
+
+    all_customers = Customer.objects.all(customer_id)
     
-    #mark the customer as picked up
-    #update the date of last pickup
-    #add $20 to the balance
+    context = {
+          
+            'all_customers': all_customers
+           
+        }
+        
+    return render(request, 'employees/all_customers.html', context)
+
+    # try:
+        
+    #     
+    # except ObjectDoesNotExist:
+        # return HttpResponseRedirect(reverse('employees:index'))
