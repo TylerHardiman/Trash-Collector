@@ -7,6 +7,8 @@ from datetime import date
 from .models import Employee
 from django.apps import apps
 
+from .filters import OrderFilter
+
 # from .models import User
 
 
@@ -43,6 +45,49 @@ def index(request):
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
+
+
+
+
+
+
+def filter_day(request):
+    # This line will get the Customer model from the other app, it can now be used to query the db for Customers
+    Customer = apps.get_model('customers.Customer') # Customer database is being loaded into the variable
+    # Filtering from customer variable the day of the week for pickup
+    #
+    today = date.today() # 2022-01-26
+    day_names =['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    todays_weekday_index = today.weekday() # 3
+    name_of_today = day_names[todays_weekday_index] # 'Wednesday'
+
+    logged_in_employee = request.user
+    try:
+
+        logged_in_employee = Employee.objects.get(user=logged_in_employee)
+
+        #Show 
+        day_customers = Customer.objects.filter(today=customer.weekly_pickup)
+        # customer_pickups_today = customers_zipcode.filter(weekly_pickup=name_of_today) | customers_zipcode.filter(one_time_pickup=today)
+        # non_suspended_accounts = customer_pickups_today.exclude(suspend_start__lt=today, suspend_end__gt=today)
+        # final_customers_pickup = non_suspended_accounts.exclude(date_of_last_pickup=today)
+        
+        context = {
+            'logged_in_employee': logged_in_employee,
+            'customers': final_customers_pickup ,
+            'today': today
+        }
+        return render(request, 'employees/index.html', context)
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect(reverse('employees:create'))
+
+
+
+
+
+
+
+
 
 
 @login_required
