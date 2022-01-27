@@ -46,6 +46,29 @@ def index(request):
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
 
+@login_required
+def create(request):
+
+    today = date.today()
+    day_names =['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    todays_weekday_index = today.weekday() # 3
+    confirmed_pickups = day_names[todays_weekday_index] # 'Wednesday'
+
+
+    customers_date_of_last_pickup = Employee.objects.get(today)
+    try:
+        customers_confirmed_pickup = Employee.objects.filter(date_of_last_pickup=confirmed_pickups)
+        customers_date_of_last_pickup = customers_confirmed_pickup.filter(customer_confirmed_pickup=today)
+        confirmed_pickups = customers_confirmed_pickup.get(date_of_last_pickup=today) 
+
+        context = {
+            'logged_in_employee': customers_date_of_last_pickup,
+            'customers': confirmed_pickups ,
+            'today': date.today()
+        }
+        return render(request, 'employees/index.html', context)
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect(reverse('employees:create'))
 
 @login_required
 def create(request):

@@ -45,6 +45,7 @@
           <td>{{customer.suspend_start}}</td>
           <td>{{customer.suspend_end}}</td>
           <td>{{customer.date_of_last_pickup}}</td>
+          <td><a href="{% url 'employees:index' customer.id %}">Confirm Pickup</a></td>
       </tr>
       {% endfor %}
     </tbody>
