@@ -35,8 +35,6 @@ def index(request):
         non_suspended_accounts = customer_pickups_today.exclude(suspend_start__lt=today, suspend_end__gt=today)
         final_customers_pickup = non_suspended_accounts.exclude(date_of_last_pickup=today)
         
-        
-        
         context = {
             'logged_in_employee': logged_in_employee,
             'customers': final_customers_pickup ,
@@ -46,29 +44,6 @@ def index(request):
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
 
-@login_required
-def create(request):
-
-    today = date.today()
-    day_names =['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    todays_weekday_index = today.weekday() # 3
-    confirmed_pickups = day_names[todays_weekday_index] # 'Wednesday'
-
-
-    customers_date_of_last_pickup = Employee.objects.get(today)
-    try:
-        customers_confirmed_pickup = Employee.objects.filter(date_of_last_pickup=confirmed_pickups)
-        customers_date_of_last_pickup = customers_confirmed_pickup.filter(customer_confirmed_pickup=today)
-        confirmed_pickups = customers_confirmed_pickup.get(date_of_last_pickup=today) 
-
-        context = {
-            'logged_in_employee': customers_date_of_last_pickup,
-            'customers': confirmed_pickups ,
-            'today': date.today()
-        }
-        return render(request, 'employees/index.html', context)
-    except ObjectDoesNotExist:
-        return HttpResponseRedirect(reverse('employees:create'))
 
 @login_required
 def create(request):
@@ -104,4 +79,27 @@ def edit_employee_profile(request):
         return render(request, 'employees/edit_profile.html', context)
 
 
+@login_required
+def pickup_confirmed(request, customer_id):
+    Customer = apps.get_model('customers.Customer')
+    update_last_pickup = Customer.objects.get(id=customer_id)
+    update_last_pickup.date_of_last_pickup = date.today()
+    update_last_pickup.save()
+    charge_customer(request, customer_id)
 
+    return HttpResponseRedirect(reverse('employees:index'))
+    # return render(request, 'employees/index.html')
+
+
+@login_required
+def charge_customer(request, customer_id):
+    Customer = apps.get_model('customers.Customer')
+    update_current_balance = Customer.objects.get(id=customer_id)
+    update_current_balance.balance += 20
+    update_current_balance.save()
+    
+    
+    
+    #mark the customer as picked up
+    #update the date of last pickup
+    #add $20 to the balance

@@ -8,5 +8,6 @@ app_name = "employees"
 urlpatterns = [
     path('', views.index, name="index"),
     path('new/', views.create, name="create"),
-    path('edit_profile/', views.edit_employee_profile, name="edit_profile")
+    path('edit_profile/', views.edit_employee_profile, name="edit_profile"),
+    path('<int:customer_id>/pickup_confirmed', views.pickup_confirmed, name='pickup_confirmed')
 ]
