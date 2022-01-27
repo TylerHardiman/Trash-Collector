@@ -45,20 +45,12 @@
           <td>{{customer.suspend_start}}</td>
           <td>{{customer.suspend_end}}</td>
           <td>{{customer.date_of_last_pickup}}</td>
-      </tr>
+          <td><a href="{% url 'employees:pickup_confirmed' customer.id %}">Confirm Pickup</a></td>
+      
+        </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
 
 {% endblock %}
-
-
-{% comment %} <td>{{logged_in_customer.first_name}}</td>
-<td>{{logged_in_customer.last_name}}</td>
-<td>{{logged_in_customer.zip_code}}</td>
-<td>{{logged_in_customer.weekly_pickup}}</td>
-<td>{{logged_in_customer.one_time_pick_up}}</td>
-<td>{{logged_in_customer.suspend_start}}</td>
-<td>{{logged_in_customer.suspend_end}}</td>
-<td>{{logged_in_customer.date_of_last_pickup}}</td> {% endcomment %}

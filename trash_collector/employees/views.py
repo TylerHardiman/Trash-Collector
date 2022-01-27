@@ -35,8 +35,6 @@ def index(request):
         non_suspended_accounts = customer_pickups_today.exclude(suspend_start__lt=today, suspend_end__gt=today)
         final_customers_pickup = non_suspended_accounts.exclude(date_of_last_pickup=today)
         
-        
-        
         context = {
             'logged_in_employee': logged_in_employee,
             'customers': final_customers_pickup ,
@@ -79,6 +77,27 @@ def edit_employee_profile(request):
             'logged_in_employees': logged_in_employee
         }
         return render(request, 'employees/edit_profile.html', context)
+
+
+@login_required
+def pickup_confirmed(request, customer_id):
+    Customer = apps.get_model('customers.Customer')
+    update_last_pickup = Customer.objects.get(id=customer_id)
+    update_last_pickup.date_of_last_pickup = date.today()
+    update_last_pickup.save()
+
+    return HttpResponseRedirect(reverse('employees:index'))
+    # return render(request, 'employees/index.html')
+
+
+@login_required
+def charge_customer(request):
+    pass
+    
+    
+    #mark the customer as picked up
+    #update the date of last pickup
+    #add $20 to the balance
 
 
 
