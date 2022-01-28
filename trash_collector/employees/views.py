@@ -9,7 +9,7 @@ from datetime import date
 from .models import Employee
 from django.apps import apps
 
-from .filters import DayFilter
+# from .filters import DayFilter
 
 # from .models import User
 
@@ -21,20 +21,16 @@ from .filters import DayFilter
 @login_required
 def index(request):
     # This line will get the Customer model from the other app, it can now be used to query the db for Customers
-    Customer = apps.get_model('customers.Customer') # Customer database is being loaded into the variable
-    # Filtering from customer variable the day of the week for pickup
-    #
+    Customer = apps.get_model('customers.Customer')
+
     today = date.today() # 2022-01-26
     day_names =['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    todays_weekday_index = today.weekday() # 3
-    name_of_today = day_names[todays_weekday_index] # 'Wednesday'
-
-    logged_in_employee = request.user
-    
+    todays_weekday_index = today.weekday()
+    name_of_today = day_names[todays_weekday_index] 
 
     try:
 
-        logged_in_employee = Employee.objects.get(user=logged_in_employee)
+        logged_in_employee = Employee.objects.get(user=request.user)
 
         customers_zipcode = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
         customer_pickups_today = customers_zipcode.filter(weekly_pickup=name_of_today) | customers_zipcode.filter(one_time_pickup=today)
@@ -52,31 +48,35 @@ def index(request):
 
 
 
-def filter_day(request, all_customers):
-    myFilter = DayFilter(request.GET, queryset=all_customers)
-    all_customers = customers
-    context = {
-            'myFilter':myFilter
-        }
-    return render(request, 'employees/index.html', context)
-
-
-# def filter_day(request):
-#     Customer = apps.get_model('customers.Customer') # 
-
-
-#     # today = date.today() # 2022-01-26
-#     day_names =['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] 
-    
+# def filter_day(request, all_customers):
 #     myFilter = DayFilter(request.GET, queryset=all_customers)
-#     customers = myFilter.qs
-
+#     all_customers = customers
 #     context = {
-#             'day_names': day_names,
 #             'myFilter':myFilter
 #         }
-      
 #     return render(request, 'employees/index.html', context)
+
+
+def day_filter(request, day):
+    Customer = apps.get_model('customers.Customer') # 
+    
+    logged_in_user = request.user
+
+    try:
+
+        logged_in_employee = Employee.objects.get(user=logged_in_user)
+
+        show_customers = Customer.objects.filter(weekly_pickup=day)
+
+        context = {
+                'logged_in_employee' : logged_in_employee, 
+                'customers' : show_customers,
+                'list_name' : day
+            }
+      
+        return render(request, 'employees/all_customers.html', context)
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect(reverse('employees:index'))
 
 
 @login_required
@@ -135,16 +135,17 @@ def charge_customer(request, customer_id):
     
 
 @login_required
-def all_customers(request, customer_id):
+def all_customers(request):
     # This line will get the Customer model from the other app, it can now be used to query the db for Customers
     Customer = apps.get_model('customers.Customer') # Customer database is being loaded into the variable
 
-    all_customers = Customer.objects.all(customer_id)
+    all_customers = Customer.objects.all()
     
     context = {
           
-            'all_customers': all_customers
-           
+            'customers': all_customers,
+            'list_name' : 'All' 
+
         }
         
     return render(request, 'employees/all_customers.html', context)

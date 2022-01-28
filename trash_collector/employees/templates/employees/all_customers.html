@@ -3,7 +3,7 @@
 
 {% block title %} Employee: All Customers {%endblock %}
 
-{% block header %} All Customers {% endblock %}
+{% block header %} {{list_name}} Customers {% endblock %}
 
 {% block content%} 
 
@@ -21,9 +21,28 @@
     <a href="{% url 'accounts:register' %}">Sign Up</a>
     {% endif %}
     
+    
     <div class="center-text">
-      <h2>List of all Customers:</h2>
+      <h2>List of {{list_name}} Customers:</h2>
       <br>
+      
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Pick a Day
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'employees:all_customers' %}" class="dropdown-item">Show All</a></li>
+          <li><a href="{% url 'employees:day_filter' 'Monday' %}" class="dropdown-item">Monday</a></li>
+          <li><a href="{% url 'employees:day_filter' 'Tuesday' %}" class="dropdown-item">Tuesday</a></li>
+          <li><a href="{% url 'employees:day_filter' 'Wednesday' %}" class="dropdown-item">Wednesday</a></li>
+          <li><a href="{% url 'employees:day_filter' 'Thursday' %}" class="dropdown-item">Thursday</a></li>
+          <li><a href="{% url 'employees:day_filter' 'Friday' %}" class="dropdown-item">Friday</a></li>
+          <li><a href="{% url 'employees:day_filter' 'Saturday' %}" class="dropdown-item">Saturday</a></li>         
+
+  
+        </ul>
+      </div>
+<br> 
     <table class="center-table">
       <thead>
           <tr>

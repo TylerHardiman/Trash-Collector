@@ -21,21 +21,18 @@
     {% endif %}
     
     <div class="center-text">
-      <h2>List of all Customers:</h2>
+      <h2>Today's Pick Ups:</h2>
       <br>
       <form method='get'>
             {{myFilter.form}}
 
-
-        <button class='btn btn-primary' type='submit'>Search</button>
-      </form>
     <table class="center-table">
       <thead>
           <tr>
               <th>Name</th>
               <th>Zip code</th>
-              <th>Pickup Day</th>
               <th>One Time Pick Up Date</th>
+              <th>Pickup Day</th>
               <th>Suspend Start</th>
               <th>Suspend End</th>
               <th>Date of Last Pick Up</th>
@@ -46,8 +43,8 @@
       <tr>
           <td>{{customer.name}}</td>
           <td>{{customer.zip_code}}</td>
-          <td>{{customer.weekly_pickup}}</td>
           <td>{{customer.one_time_pick_up}}</td>
+          <td>{{customer.weekly_pickup}}</td>
           <td>{{customer.suspend_start}}</td>
           <td>{{customer.suspend_end}}</td>
           <td>{{customer.date_of_last_pickup}}</td>
