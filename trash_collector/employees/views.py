@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
 
-from trash_collector import customers
+# from trash_collector import customers
 from .models import Employee
 from django.apps import apps
 
