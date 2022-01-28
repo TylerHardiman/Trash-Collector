@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
+
+from trash_collector import customers
 from .models import Employee
 from django.apps import apps
 
@@ -28,6 +30,8 @@ def index(request):
     name_of_today = day_names[todays_weekday_index] # 'Wednesday'
 
     logged_in_employee = request.user
+    
+
     try:
 
         logged_in_employee = Employee.objects.get(user=logged_in_employee)
@@ -48,18 +52,31 @@ def index(request):
 
 
 
-
-
-
-def filter_day(request):
-    myFilter = DayFilter(request.GET, queryset=customers)
-    customers = myFilter.qs
-
+def filter_day(request, all_customers):
+    myFilter = DayFilter(request.GET, queryset=all_customers)
+    all_customers = customers
     context = {
             'myFilter':myFilter
         }
-      
     return render(request, 'employees/index.html', context)
+
+
+# def filter_day(request):
+#     Customer = apps.get_model('customers.Customer') # 
+
+
+#     # today = date.today() # 2022-01-26
+#     day_names =['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] 
+    
+#     myFilter = DayFilter(request.GET, queryset=all_customers)
+#     customers = myFilter.qs
+
+#     context = {
+#             'day_names': day_names,
+#             'myFilter':myFilter
+#         }
+      
+#     return render(request, 'employees/index.html', context)
 
 
 @login_required
