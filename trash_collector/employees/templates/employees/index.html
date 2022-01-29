@@ -23,11 +23,10 @@
     <div class="center-text">
       <h2>Today's Pick Ups:</h2>
       <br>
-      <form method='get'>
-            {{myFilter.form}}
 
-    <table class="center-table">
-      <thead>
+      <div class = "table-responsive-xl">  
+        <table class="table">
+        <thead>
           <tr>
               <th>Name</th>
               <th>Zip code</th>
@@ -54,6 +53,7 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
 </div>
 
 {% endblock %}

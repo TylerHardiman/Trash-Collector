@@ -9,7 +9,7 @@
 </head>
   <body>
   {% if user.is_authenticated %}
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">   
     <a class="navbar-brand" href="#">Trash Collector</a>
     <div class="navbar-nav">
     {% block navbar %}{% endblock %}
@@ -20,8 +20,8 @@
     <main>
       <div class="container">
         <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8" align="center">
+          <div class="col-1"></div>
+          <div class="col-10" align="center">
             <br />
             <br />
             <h1>{% block header %}{% endblock %}</h1>
