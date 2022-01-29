@@ -3,18 +3,13 @@
 
 {% block title %} Employee: All Customers {%endblock %}
 
-{% block header %} {{list_name}} Customers {% endblock %}
+{% block header %} List of {{list_name}} Customers {% endblock %}
 
 {% block content%} 
 
     {% if user.is_authenticated %}
-    Hello {{ logged_in_employee.name }}!<br />
-    Address: {{ logged_in_employee.address }}<br /> 
-    Zip Code: {{logged_in_employee.zip_code }}<br /> 
     <br>       
     
-
-    <h3>{% now 'DATE_FORMAT' %}</h3><br>
     {% else %}
     <p>You are at the Employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
@@ -23,11 +18,10 @@
     
     
     <div class="center-text">
-      <h2>List of {{list_name}} Customers:</h2>
       <br>
       
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
           Pick a Day
         </button>
         <ul class="dropdown-menu">
