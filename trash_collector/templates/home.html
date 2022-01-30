@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title %} Trash Collector {% endblock %}
-
-{% block header %} Trash Collector {% endblock %}
-
-{% block content %}
-<br />
-<br />
-<br />
-<br />
+{% block header%} Trash Collection Login Portal{% endblock %}
+{% block content%}
 {% if user.is_authenticated %}
   Hello {{ user.username }}. You don't have a group assigned. Please contact administrator or attempt to register again.
   <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
-  <p>You are not logged in. Please log in or create an account.</p>
-  <a href="{% url 'login' %}">Log In</a>
-  <a href="{% url 'accounts:register' %}">Sign Up</a>
+<h1<div class="container"><h1> 
+  <img src="https://images.unsplash.com/photo-1533745848184-3db07256e163?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+  class="img-responsive" alt="Responsive image"
+  width="340" height="240">
+  <h3><p>You are not logged in. Please log in or create an account.</p><h3>
+  <h4><a href="{% url 'login' %}">Log In</a><h4>
+  <h4><a href="{% url 'accounts:register' %}">Sign Up</a><h4>
 {% endif %}
 {% endblock %}
 
