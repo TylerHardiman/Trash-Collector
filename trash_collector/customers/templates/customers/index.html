@@ -7,7 +7,7 @@
 {% block content %}
   {% if user.is_authenticated %}
   
-        <strong>Address:</strong><br> {{ logged_in_customer.address }} {{logged_in_customer.zip_code }}<br />
+        <strong>Address:</strong><br> {{ logged_in_customer.address }}, {{logged_in_customer.zip_code }}<br />
         <br />
         <strong>Your Weekly Pickup Day:</strong><br> {{ logged_in_customer.weekly_pickup }}
         <br />

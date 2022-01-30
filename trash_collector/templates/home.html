@@ -8,9 +8,11 @@
   <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
 <div class="container"> 
-  <img src="https://images.unsplash.com/photo-1533745848184-3db07256e163?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+  {% comment %} <img src="https://images.unsplash.com/photo-1533745848184-3db07256e163?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
   class="img-responsive" alt="Responsive image"
-  width="340" height="240">
+  width="340" height="240"> {% endcomment %}
+  <img src= "\static\imgs\traschcans.png" alt="Responsive image" height="136">
+</div>
   <h3>You are not logged in. <br>Please log in or create an account.<h3>
   <h4 class="login-signup-link"><a href="{% url 'login' %}">Log In</a><h4>
   <h4 class="login-signup-link"><a href="{% url 'accounts:register' %}">Sign Up</a><h4>
