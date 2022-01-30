@@ -2,20 +2,18 @@
 
 {% block title %} Customer Home {% endblock %}
 
-{% block header %} Customer Portal {% endblock %}
+{% block header %}Hello {{ logged_in_customer.name }}!{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-        Hello {{ logged_in_customer.name }}!<br />
-        Address: {{ logged_in_customer.address }} {{logged_in_customer.zip_code }}<br />
-        Current balance: $ {{ logged_in_customer.balance }}.00
+  
+        <strong>Address:</strong><br> {{ logged_in_customer.address }} {{logged_in_customer.zip_code }}<br />
         <br />
-        <br />
-        Your Weekly Pickup Day: {{ logged_in_customer.weekly_pickup }}
+        <strong>Your Weekly Pickup Day:</strong><br> {{ logged_in_customer.weekly_pickup }}
         <br />
         <br />
         {% if logged_in_customer.one_time_pickup %}
-          You have an extra pickup scheduled for {{ logged_in_customer.one_time_pickup }}
+        <strong>You have an extra pickup scheduled for:</strong><br>{{ logged_in_customer.one_time_pickup }}
         {% endif %}
         <br />
         <br />
@@ -28,7 +26,11 @@
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-  <h4><p>Make a payment<p><h4>
+  
+    <h3>Current balance: $ {{ logged_in_customer.balance }}.00</h3>
+    <br>
+
+  <h4>Make a payment</h4>
   <div id="container"></div>
 
   <script>

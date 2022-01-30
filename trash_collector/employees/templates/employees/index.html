@@ -2,57 +2,56 @@
 
 {% block title %} Employee Home {%endblock %}
 
-{% block header %} Employee Portal {% endblock %}
+{% block header %} Hello {{ logged_in_employee.name }}! {% endblock %}
 
 {% block content%} 
 
     {% if user.is_authenticated %}
-    Hello {{ logged_in_employee.name }}!<br />
-    Address: {{ logged_in_employee.address }}<br /> 
-    Zip Code: {{logged_in_employee.zip_code }}<br /> 
-    <br>       
-    
-
-    <h3>{% now 'DATE_FORMAT' %}</h3><br>
     {% else %}
     <p>You are at the Employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
     {% endif %}
+    {% comment %} Address: {{ logged_in_employee.address }}<br /> 
+    Zip Code: {{logged_in_employee.zip_code }}<br />  {% endcomment %}
+    <h3>The date is:<br><strong>{% now 'DATE_FORMAT' %}</strong></h3><br>
     
     <div class="center-text">
       <h2>Today's Pick Ups:</h2>
       <br>
 
-      <div class = "table-responsive-xl">  
-        <table class="table">
-        <thead>
-          <tr>
-              <th>Name</th>
-              <th>Zip code</th>
-              <th>One Time Pick Up Date</th>
-              <th>Pickup Day</th>
-              <th>Suspend Start</th>
-              <th>Suspend End</th>
-              <th>Date of Last Pick Up</th>
-          </tr>
-      </thead>
-      <tbody>
-    {% for customer in customers %}
-      <tr>
-          <td>{{customer.name}}</td>
-          <td>{{customer.zip_code}}</td>
-          <td>{{customer.one_time_pick_up}}</td>
-          <td>{{customer.weekly_pickup}}</td>
-          <td>{{customer.suspend_start}}</td>
-          <td>{{customer.suspend_end}}</td>
-          <td>{{customer.date_of_last_pickup}}</td>
-          <td><a href="{% url 'employees:pickup_confirmed' customer.id %}">Confirm Pickup</a></td>
-      
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-</div>
+      <div class = "col-8" align="center">
+        <div class = "table-responsive-med">  
+          <table class="table">
+           <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Zip code</th>
+                {% comment %} <th>One Time Pick Up Date</th>
+                <th>Pickup Day</th> {% endcomment %}
+                {% comment %} <th>Suspend Start</th>
+                <th>Suspend End</th>
+                <th>Date of Last Pick Up</th> {% endcomment %}
+              </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+              <tr>
+                  <td>{{customer.name}}</td>
+                  <td>{{customer.address}}</td>
+                  <td>{{customer.zip_code}}</td>
+                  {% comment %} <td>{{customer.one_time_pick_up}}</td>
+                  <td>{{customer.weekly_pickup}}</td> {% endcomment %}
+                  {% comment %} <td>{{customer.suspend_start}}</td>
+                  <td>{{customer.suspend_end}}</td>
+                  <td>{{customer.date_of_last_pickup}}</td> {% endcomment %}
+                  <td><a href="{% url 'employees:pickup_confirmed' customer.id %}" button type="button" class="btn btn-primary">Confirm Pickup</a></td>
+                </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 {% endblock %}

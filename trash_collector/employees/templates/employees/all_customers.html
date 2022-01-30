@@ -35,11 +35,13 @@
         </ul>
       </div>
 <br> 
+<br>
   <div class = "table-responsive-xl">  
   <table class="table">
       <thead>
           <tr>
               <th>Name</th>
+              <th>Address</th>
               <th>Zip code</th>
               <th>Pickup Day</th>
               <th>One-Time Pickup</th>
@@ -53,13 +55,14 @@
     {% for customer in customers %}
       <tr>
           <td>{{customer.name}}</td>
+          <td>{{customer.address}}</td>
           <td>{{customer.zip_code}}</td>
           <td>{{customer.weekly_pickup}}</td>
           <td>{{customer.one_time_pick_up}}</td>
           <td>{{customer.suspend_start}}</td>
           <td>{{customer.suspend_end}}</td>
           <td>{{customer.date_of_last_pickup}}</td>
-          <td>{{customer.balance}}</td>
+          <td>${{customer.balance}}.00</td>
     
         </tr>
       {% endfor %}
